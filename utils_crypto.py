@@ -2,7 +2,7 @@ from base64 import b64decode
 
 def decrypt_rot_47(string: str) -> str:
     '''
-    This function is used to decrypt rot_47 encoded string
+    This function can be used to decrypt rot_47 encoded string
     '''
     decrypted_string = ""
     for char in string:
@@ -15,13 +15,13 @@ def decrypt_rot_47(string: str) -> str:
 
 def hextobin(string: str) -> str:
     '''
-    This function basically fixes the 
+    This function can be used to convert hex string to ascii
     '''
     return bytearray.fromhex(string).decode("utf-8")
 
 def fix_padding_base64(string: str) -> str:
     '''
-    This function basically fixes the padding of our base 64 string
+    This function can be used to fixe the padding of our base64 encoded string
     '''
     while True:
         if(len(string) % 4 !=0):
@@ -31,7 +31,7 @@ def fix_padding_base64(string: str) -> str:
 
 def decode_base64(string: str) -> str:
     '''
-        decode the base64 encoded string and returns utf-8 strings
+        This function can be used to decode base64 string to utf-8
     '''
     return b64decode(str(string)).decode("utf-8")
 
