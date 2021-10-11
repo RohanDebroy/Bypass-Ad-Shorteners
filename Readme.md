@@ -1,6 +1,6 @@
 # Bypass Ad Shorteners
 
-Hi, This is just a simple python wrapper for [Auto Link Bypasser](https://chrome.google.com/webstore/detail/auto-link-bypasser/doiagnjlaingkmdjlbfalakpnphfmnoh) chrome extension by yu yummari.
+Hi, This is just a simple python wrapper for [Auto Link Bypasser](https://chrome.google.com/webstore/detail/auto-link-bypasser/doiagnjlaingkmdjlbfalakpnphfmnoh) chrome extension by Yu Yumari.
 
 # Supported Url
 
