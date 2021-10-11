@@ -1,12 +1,13 @@
-from utils_crypto import decode_string
+from bypassadshorteners.utils_crypto import decode_string
 from urllib.parse import urlparse
 import requests
 import pathlib
 import json
 
-#* This global variable is used to keep track of how many times we have retried.
-#*Basically a hacky method
+# * This global variable is used to keep track of how many times we have retried.
+# *Basically a hacky method
 retry_counter = 0
+
 
 def load_config() -> dict:
     '''
@@ -16,7 +17,7 @@ def load_config() -> dict:
     try:
         with open(f'{pathlib.Path.cwd()}/config.json', mode='r', encoding='utf-8') as file:
             data = json.load(file)
-        
+
         if data == {}:
             raise Exception
         return data
@@ -31,7 +32,7 @@ def fetch_config() -> dict:
     This function requests for the configuration like accepted domains
     and access key and other information and returns a json response. 
     '''
-    headers = { 
+    headers = {
         'x-requested-with': 'XMLHttpRequest',
         'x-meow': 'me\xBAow'
     }
@@ -57,6 +58,7 @@ def save_config(data: dict) -> bool:
     except:
         return False
 
+
 def fetch_request(url, access_key) -> dict:
     '''
     This function generates the headers and payload and send it
@@ -69,7 +71,7 @@ def fetch_request(url, access_key) -> dict:
     }
 
     data = {
-        'l':url,
+        'l': url,
         'u': access_key
     }
 
@@ -79,12 +81,13 @@ def fetch_request(url, access_key) -> dict:
 
         if responseBody["result"] == "" and responseBody["message"] != "":
             raise Exception
-        
+
         return responseBody
-    
+
     except:
         pathlib.Path(f'{pathlib.Path.cwd()}/config.json').unlink()
         return retry_request(url)
+
 
 def retry_request(url: str):
     '''
@@ -92,13 +95,14 @@ def retry_request(url: str):
     This function calls the initlaize request with the url
     as params.
     '''
-    global retry_counter 
-    retry_counter+= 1
-        
+    global retry_counter
+    retry_counter += 1
+
     if retry_counter > 3:
-        return {"status":"failed"}
+        return {"status": "failed"}
 
     return initalize_request(url)
+
 
 def initalize_request(url: str) -> dict:
     '''
@@ -108,6 +112,7 @@ def initalize_request(url: str) -> dict:
     data = load_config()
     access_key = decode_string(data["access_key"])
     return fetch_request(url=url, access_key=access_key)
+
 
 def is_url_supported(url: str) -> bool:
     '''
@@ -119,6 +124,7 @@ def is_url_supported(url: str) -> bool:
 
     return base_url in data["diff_domains"] or base_url in data["accept_domains"]
 
+
 def bypass_url(url: str) -> dict:
     '''
     This function calls the initlaize method by passing the url as params
@@ -127,9 +133,10 @@ def bypass_url(url: str) -> dict:
     if is_url_supported(url):
         return initalize_request(url=url)
     else:
-        return {"status":"Url unsupported"}
+        return {"status": "Url unsupported"}
 
-def recursive_bypass_url(url:str) -> dict:
+
+def recursive_bypass_url(url: str) -> dict:
     '''
     It calls bypass url underneath recursivelys i.e it will keep calling bypass url
     on the provided url for the first time and the responsed url from the 2nd time 
@@ -144,14 +151,3 @@ def recursive_bypass_url(url:str) -> dict:
             return recursive_bypass_url(response["result"])
     except:
         return response
-                
-
-def main():
-    # url = input("Enter the url to bypass : ")
-    # bypass_url(url)
-    url = "https://ouo.io/HOboAf"
-    a = recursive_bypass_url(url)
-    print(a)
-
-if __name__ == '__main__':
-    main()
