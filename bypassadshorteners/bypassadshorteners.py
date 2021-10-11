@@ -1,8 +1,10 @@
-from bypassadshorteners.utils_crypto import decode_string
-from urllib.parse import urlparse
-import requests
-import pathlib
 import json
+import pathlib
+from urllib.parse import urlparse
+
+import requests
+
+from bypassadshorteners.utils_crypto import decode_string
 
 # * This global variable is used to keep track of how many times we have retried.
 # *Basically a hacky method
