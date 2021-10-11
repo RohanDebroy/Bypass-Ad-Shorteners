@@ -2,8 +2,6 @@ from bypassadshorteners import recursive_bypass_url, bypass_url
 
 
 def main():
-    # url = input("Enter the url to bypass : ")
-    # bypass_url(url)
     url = "https://ouo.io/HOboAf"
 
     print(f'{"*" * 5} Started Bypassing {"*" * 5}')
